@@ -1,5 +1,6 @@
 package aoc
 import scala.util.chaining.*
+import scala.collection.MapView
 
 object tmp extends App:
 
@@ -21,7 +22,7 @@ object tmp extends App:
     case File(name: String, size: Int)
     case Dir(path: List[String])
 
-  val diskStruct = "day07.txt".live
+  val fileStructure: MapView[DiskObject.Dir, List[DiskObject]] = "day07.txt".live
     .map(x => StdOutLine(x))
     .foldLeft((List.empty[String], List.empty[(DiskObject.Dir, DiskObject)])) {
       case ((path, collection), out) =>
@@ -41,9 +42,9 @@ object tmp extends App:
   val size: DiskObject => Int = d =>
     d match
       case DiskObject.File(v, s) => s
-      case DiskObject.Dir(p)     => diskStruct.getOrElse(DiskObject.Dir(p), List.empty).map(size(_)).sum
+      case DiskObject.Dir(p)     => fileStructure.getOrElse(DiskObject.Dir(p), List.empty).map(size(_)).sum
 
-  val folderSizes: Map[DiskObject.Dir, Int] = diskStruct.keysIterator.map(k => k -> diskStruct(k).map(size).sum).toMap
+  val folderSizes: Map[DiskObject.Dir, Int] = fileStructure.keysIterator.map(k => k -> fileStructure(k).map(size).sum).toMap
 
   // Part 1.
   folderSizes.values.filter(_ <= 100_000).sum pipe println
