@@ -2,7 +2,7 @@ package aoc
 import scala.util.chaining.*
 import scala.collection.MapView
 
-object tmp extends App:
+object day07 extends App:
 
   enum StdOutLine:
     case Cd(v: String)
