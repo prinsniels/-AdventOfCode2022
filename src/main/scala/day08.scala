@@ -27,16 +27,16 @@ object day08 extends App:
         case Some(v)           => 1
     start => step(start + dir, b(start))
 
-  val treeVisible: Vec => Boolean = point =>
+  val visibleCount: Vec => Boolean = point =>
     visible(board, up)(point) || visible(board, down)(point) ||
       visible(board, left)(point) || visible(board, right)(point)
   
-  val sceneValue: Vec => Int = point =>
+  val mostScenic: Vec => Int = point =>
     trees(board, up)(point) * trees(board, down)(point) *
       trees(board, left)(point) * trees(board, right)(point)
   
   // Part 1:
-  board.keysIterator.map(treeVisible).count(x => x) pipe println
+  board.keysIterator.map(visibleCount).count(x => x) pipe println
 
   // Part 2:
-  board.keysIterator.map(sceneValue).max pipe println
+  board.keysIterator.map(mostScenic).max pipe println
