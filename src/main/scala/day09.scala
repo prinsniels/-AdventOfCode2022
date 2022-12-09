@@ -27,7 +27,7 @@ object day09 extends App:
       val dy = v.y - o.y
       dx <= 1 && dx >= -1 && dy <= 1 && dy >= -1
 
-  def follow(t: Vec, h: Vec): Vec =
+  def nwPosition(t: Vec, h: Vec): Vec =
     if t.connects(h) then t.copy()
     else {
       val dx = h.x - t.x
@@ -38,11 +38,11 @@ object day09 extends App:
       ) + t
     }
 
-  def moveRope(m: Move, rope: List[Vec]): List[Vec] =
+  def changeRope(m: Move, rope: List[Vec]): List[Vec] =
     def run(rm: List[Vec], prev: Vec): List[Vec] =
       rm match
         case hd :: tail =>
-          val nT = follow(hd, prev)
+          val nT = nwPosition(hd, prev)
           nT :: run(tail, nT)
         case Nil => Nil
 
@@ -50,9 +50,9 @@ object day09 extends App:
     nH :: run(rope.tail, nH)
 
   def simulate(ropeSize: Int, moves: List[Move]): (List[Vec], Set[Vec]) =
-    moves.foldLeft(List.fill(ropeSize)(Vec(0, 0)), Set.empty[Vec]) { case ((ks, t), m) =>
-      val nRope = moveRope(m, ks)
-      (nRope, t + nRope.last)
+    moves.foldLeft(List.fill(ropeSize)(Vec(0, 0)), Set.empty[Vec]) { case ((rope, uniqueEnds), move) =>
+      val nRope = changeRope(move, rope)
+      (nRope, uniqueEnds + nRope.last)
     }
 
   val moves = "day09.txt".live
