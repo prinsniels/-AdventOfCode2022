@@ -24,11 +24,14 @@ object day10 extends App:
     .reverse
 
   // Part 1.
-  // We are interested in the X during a cycle, we calculated at the end of 
+  // We are interested in the X during a cycle, we calculated at the end of
   // each cycle, so wee need to add 1 at the beginning of the list to reflect
   // during each cycle or increase zipWithIndex by 1 or lower all interesting Indexes by 1
   val interestingIndexes = Set(20, 60, 100, 140, 180, 220)
-  (1 :: cpu).zipWithIndex.filter(x => interestingIndexes(x._2)).map((x, y) => x * y).sum pipe println
+  (1 :: cpu).zipWithIndex
+    .filter(x => interestingIndexes(x._2))
+    .map((x, y) => x * y)
+    .sum pipe println
 
   def draw(sc: Int, p: Int): String =
     if (math.abs(sc - p) <= 1) "#" else "."
