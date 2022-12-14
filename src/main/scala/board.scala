@@ -25,5 +25,5 @@ extension [A](b: Board[A])
 
   def show: Unit =
     (b.minY to b.maxY).foreach { y =>
-      (b.minX to b.maxX).map(x => b.getOrElse(Vec(x, y), "")).mkString pipe println
+      (b.minX to b.maxX).map(x => b.getOrElse(Vec(x, y), " ")).mkString pipe println
     }
