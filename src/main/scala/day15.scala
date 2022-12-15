@@ -17,11 +17,11 @@ object day15 extends App:
   extension (s: ScanResult)
     def atY(y: Int): Set[Vec] = {
       LazyList
-        .iterate(Vec(s.sensor.x, y))(a => a + Vec(-1, 0))
-        .takeWhile(a => manhattan(a, s.sensor) <= s.dist)
+        .iterate(Vec(s.sensor.x, y))(_ + Vec(-1, 0))
+        .takeWhile(s.covers)
         ++ LazyList
-          .iterate(Vec(s.sensor.x, y))(a => a + Vec(1, 0))
-          .takeWhile(a => manhattan(a, s.sensor) <= s.dist)
+          .iterate(Vec(s.sensor.x, y))(_ + Vec(1, 0))
+          .takeWhile(s.covers)
     }.toSet
 
     def surrounding: LazyList[Vec] =
@@ -55,11 +55,11 @@ object day15 extends App:
   val coveredByScan: Vec => Boolean = inCoversAScanResult(scans)
 
   // Part 1.
-//   scans.flatMap(_.atY(2000000)).filterNot(devices).toSet.size pipe println
+  scans.flatMap(_.atY(2000000)).filterNot(devices).toSet.size pipe println
 
   // Part 2.
   scans
-    .map(_.surrounding)  // flatMap will create the complete list, used map reduce
+    .map(_.surrounding) // flatMap will create the complete list, used map reduce
     .reduce(_ ++ _)
     .filter(v => v.x >= 0 && v.x <= 4_000_000 && v.y >= 0 && v.y <= 4_000_000)
     .filterNot(coveredByScan)
