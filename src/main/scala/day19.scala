@@ -1,7 +1,5 @@
 package aoc
 import util.chaining.*
-import java.awt.Robot
-import java.awt.Taskbar.State
 import scala.annotation.tailrec
 
 object day19 extends App:
