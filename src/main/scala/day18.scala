@@ -2,7 +2,7 @@ package aoc
 import util.chaining.*
 import aoc.board.Vec
 
-object day19 extends App:
+object day18 extends App:
 
   case class Point(x: Int, y: Int, z: Int)
 
